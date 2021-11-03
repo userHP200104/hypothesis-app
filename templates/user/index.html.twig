@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('../css/main.css') }}"/>
+{% endblock %} 
+
+{% block title %}Users{% endblock %}
+
+{% block body %}
+    <h1 class="text-center" style="font-size: 60px;font-family: var(--primary-font-family);font-weight: 700;margin: 50px 0;">Users</h1>
+<div class="card_container">
+{% for user in users %}
+    <div class="user_card">
+        <span class="main">
+            <h1>ID: {{ user.id }}</h1>
+            <h1>{{ user.username }}</h1>
+        </span>
+
+        Name:
+        <span class="user_name"><h3>{{ user.fullName }}</h3></span>
+        Email:
+        <span class="user_email"><h3>{{ user.email }}</h3></span>
+
+        <span class="user_status">
+            {% if (user.roles ? user.roles|json_encode : '') == '["ROLE_ADMIN","ROLE_USER"]' %}
+            <h4 class="user_role">Admin</h4>
+            {% else %}
+            <h4 class="user_role">User</h4>
+            {% endif %}
+            <h4 class="user_ban">Banned: {{ user.isBanned ? 'Yes' : 'No' }}</h4>
+        </span>
+        {% if user.isBanned  == 0 %}
+                        <a href="{{ path('user_ban', {'id': user.id}) }}" class="ban_btn">ban</a>
+
+                    {% endif %}
+                    {% if user.isBanned  == 1 %}
+                        <a href="{{ path('user_unban', {'id': user.id}) }}" class="ban_btn">unban</a>
+
+                    {% endif %}
+
+
+
+                    <a href="{{ path('user_edit', {'id': user.id}) }}" class="edit_btn">edit</a>
+    </div>
+{% endfor %}
+    </div>
+
+    {# <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Roles</th>
+                <th>Password</th>
+                <th>IsBanned</th>
+                <th>Reputation</th>
+                <th>Full_name</th>
+                <th>Email</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>{{ user.password }}</td>
+                <td>{{ user.isBanned ? 'Yes' : 'No' }}</td>
+                <td>{{ user.reputation }}</td>
+                <td>{{ user.fullName }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                
+                    {% if user.isBanned  == 0 %}
+                        <a href="{{ path('user_ban', {'id': user.id}) }}">ban</a>
+
+                    {% endif %}
+                    {% if user.isBanned  == 1 %}
+                        <a href="{{ path('user_unban', {'id': user.id}) }}">unban</a>
+
+                    {% endif %}
+
+
+
+                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table> #}
+
+    <a href="{{ path('user_new') }}" class="add_new_btn">Add New User</a>
+{% endblock %}

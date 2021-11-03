@@ -1,0 +1,386 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Questions{% endblock %}
+
+{% block body %}
+    <h1 class="h3 header col-12 text-center" style="margin: 30px 0 30px 0">Ask Question</h1>
+
+    {{ include('questions/_form.html.twig') }}
+
+    {# <a href="{{ path('questions_index') }}" class="back_btn">
+        <i class="fas fa-chevron-left"></i>
+        back to list
+    </a> #}
+
+    <style>
+       :root {
+    --primary-font-family:  'Nunito Sans', sans-serif;
+ 
+    /* --gradient: linear-gradient(45deg, #FFDD99, #FF99BB); 
+    --colour-one: #FFDD99;
+    --colour-two: #FF99BB;
+    --colour-three: #4200FF;
+ 
+    --success-alert: #80FFBF;
+    --error-alert: #FF6666; */
+ 
+   }
+
+body, h1, h2, h3, h4, h5, h6, p, .row{
+    margin: 0;
+    padding: 0;
+}
+
+.back_btn{
+    font-family: var(--primary-font-family);
+    font-size: 32px;
+    font-weight: 700;
+    padding-top: 20px;
+    width: 385px;
+    height: 84px;
+    border: 7px solid #000000;
+    border-radius: 16px;
+    padding: 15px;
+    margin: 10px 0 -210px 115px;
+    background-color: #000;
+    text-decoration: none;
+    color: #fff;
+}
+
+select{
+    width: 205px;
+    height: 63.9px;
+    font-size: 20px;
+    margin-left: 120px;
+    font-family: var(--primary-font-family);
+    padding: 0 20px;
+    border-radius: 8px;
+    border: 4px solid #000000; 
+    background-color: #fff;
+    color: #000;
+}
+
+option{
+    font-weight: 700;
+}
+
+#user, #questions{
+    margin: 0 650px;
+}
+
+#questions input, #questions textarea{
+    width: 110%;;
+    margin: 15px 0 !important;
+    flex: 0 0 auto;
+    width: 100%;
+}
+
+textarea{
+    height: 300px !important;
+}
+
+.sign_in_anchor, .sign_in_anchor:hover{
+    color: #fff;
+    text-decoration: none;
+}
+
+.register_anchor, .register_anchor:hover{
+    color: #000;
+    text-decoration: none;
+}
+
+.sign_in_header{
+    margin: 164px 0 72px 0;
+    
+}
+
+.profile_picture{
+    width: 200px;
+    height: 200px;
+    background-color: #FFD966;
+    border: 7px solid #000;
+    border-radius: 132px;
+    margin: 72px auto 64px auto;
+}
+
+.form_input{
+    /* margin-top: 100px; */
+}
+
+input, textarea{
+    height: 84px;
+    width: 50%;
+    min-width: 385px;
+    border: 7px solid #000000;
+    border-radius: 16px;
+    margin: 40px 0 0 0 !important;
+    padding-left: 16px !important;
+    font-family:var(--primary-font-family);
+    font-size: 24px;
+    font-weight: 700;
+    color: #000000;
+}
+
+input:focus, textarea:focus{
+    background: #FFD966;
+    outline: none;
+}
+
+input::placeholder, textarea::placeholder{
+    font-family:var(--primary-font-family);
+    font-size: 24px;
+    font-weight: 700;
+    color: #000000;
+
+}
+
+label{
+    font-family: var(--primary-font-family);
+    font-size:20px;
+    font-weight: 700;
+    color: #000000;
+    margin: 0 0 -50px 0;
+}
+
+.small_input input:nth-child(1){
+    margin-right: 48px !important;
+}
+
+.small_input input{
+    min-width: 340px;
+}
+
+.btns{
+    font-family:var(--primary-font-family);
+    font-size: 32px;
+    font-weight: 700;
+    padding-top: 20px;
+}
+
+.button{
+    height: 84px;
+    border: 7px solid #000000;
+    border-radius: 16px;
+    padding-top: 10px;
+    margin: 0 0 24px 0;
+}
+
+.register_btn{
+    font-family: var(--primary-font-family);
+    font-size: 32px;
+    font-weight: 700;
+    color: #000000;
+    padding-top: 20px;
+    width: 385px;
+    height: 84px;
+    border: 7px solid #000000;
+    border-radius: 16px;
+    padding-top: 10px;
+    margin: 10px 0 -470px -800px;
+    background-color: #FFD966;
+    color: #000;
+    transform: translateX(107%);
+}
+
+.sign_in_btn{
+    font-family: var(--primary-font-family);
+    font-size: 32px;
+    font-weight: 700;
+    padding-top: 20px;
+    width: 385px;
+    height: 84px;
+    border: 7px solid #000000;
+    border-radius: 16px;
+    padding-top: 10px;
+    margin: 10px 0 -210px -200px;
+    background-color: #000;
+    color: #fff;
+}
+
+.delete_btn{
+    font-family: var(--primary-font-family);
+    font-size: 32px;
+    font-weight: 700;
+    padding-top: 20px;
+    width: 385px;
+    height: 84px;
+    border: 7px solid #000000;
+    border-radius: 16px;
+    padding-top: 10px;
+    margin: 10px 0 -210px 700px;
+    background-color: #ff6666;
+    color: #000;
+}
+
+.back_btn{
+    font-family: var(--primary-font-family);
+    font-size: 32px;
+    font-weight: 700;
+    padding-top: 20px;
+    width: 385px;
+    height: 84px;
+    border: 7px solid #000000;
+    border-radius: 16px;
+    padding: 15px;
+    margin: 10px 0 -210px 115px;
+    background-color: #000;
+    text-decoration: none;
+    color: #fff;
+}
+
+.sign_in_btn:hover{
+    border: 7px solid #000;
+    background-color: #fff;
+    color: #000;
+}
+
+@media (min-width: 500px) and (max-width: 767.98px) {
+
+    .sign_in_btn{
+        margin-left: 55px;
+    }
+
+    .register_btn{
+        margin-left: 55px;
+    }
+
+    .profile_picture {
+      width: 200px;
+      height: 200px;
+      margin: 100px auto 23px auto;
+    }
+
+    input{
+        margin-top: 30px !important;
+    }
+
+    .username{
+        min-width: 340px;
+        margin: 30px 0 0 -4px !important;
+    }
+    
+    .password{
+        min-width: 340px;
+        margin: 30px 0 0 -4px !important;
+        
+    }
+    
+    .email{
+        min-width: 340px;
+        margin: 30px 0 0 -194px !important;
+    }
+    
+    .number{
+        min-width: 340px;
+        margin: 30px 0 0 49px !important;
+        
+    }
+    .button{
+        margin-top: 20px;
+    }
+    
+}
+    .form_widget{
+        transform: translateX(10%);
+    }
+    
+    .form_widget input{
+        height: 64px !important;
+        border: 4px solid #000000;
+        border-radius: 16px;
+        margin: 40px 0 0 -105px !important;
+        padding-left: 16px !important;
+        font-family:var(--primary-font-family);
+        font-size: 24px;
+        font-weight: 700;
+        color: #000000;
+    }
+
+    
+
+  @media (min-width: 992px){
+
+    input, textarea{
+        height: 64px;
+        border: 4px solid #000000;
+        border-radius: 16px;
+        margin: 40px 0 0 0 !important;
+        padding-left: 16px !important;
+        font-family:var(--primary-font-family);
+        font-size: 24px;
+        font-weight: 700;
+        color: #000000;
+    }
+
+    .profile_picture{
+        width: 164px;
+        height: 164px;
+        background-color: #FFD966;
+        border: 7px solid #000;
+        border-radius: 132px;
+        margin: 80px auto 50px auto;
+    }
+
+    .profile_input{
+        height: 64px;
+        border: 4px solid #000000;
+        border-radius: 16px;
+        margin: 40px 10px 0 0 !important;
+        padding-left: 16px !important;
+        font-family:var(--primary-font-family);
+        font-size: 24px;
+        font-weight: 700;
+        color: #000000;
+    }
+    
+    .form_input{
+        padding: 0 30%;
+    }
+
+    .small_input input:nth-child(1){
+        margin-right: 42px !important;
+        margin-left: 334px !important;
+    }
+
+    .big_input input:nth-child(2){
+        margin-right: 42px !important;
+        /* margin-left: 334px !important; */
+        min-width: 305px;
+    }
+
+    .big_input input:nth-child(3){
+        min-width: 305px;
+    }
+
+    .small_input input{
+        min-width: 305px;
+    }
+
+    .button{
+        height: 84px;
+        border: 7px solid #000000;
+        border-radius: 16px;
+        padding-top: 10px;
+        margin: 40px -16% 24px -16%;
+    }
+
+    .update_btn{
+        background-color: #FFD966;
+        color: #000;
+    }
+
+    .sign_in_header{
+        margin: 140px 0 72px 0 !important;
+    }
+
+}
+
+.header{
+    font-size: 60px;
+    font-family: var(--primary-font-family);
+    font-weight: 700;
+    margin: 250px 0 0 0;
+} 
+    </style>
+
+{% endblock %}

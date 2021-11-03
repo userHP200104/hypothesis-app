@@ -1,0 +1,199 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Home {% endblock %} 
+
+{% block stylesheet %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('../css/main.css') }}"/>
+{% endblock %} 
+
+    {#  #}
+
+{% block body %}
+
+    <div class="container-fluid">
+
+    <header class="header position-fixed top-0 start-0 col-12 row"> 
+            <img src="{{ asset('../assets/hypothesis_logo.svg')}}" class="logo position-relative top-50 start-0 translate-middle-y col-6 col-sm-6 col-md-6 col-lg-4">
+
+            <div class="search_container col-12 d-none d-sm-none d-md-none d-lg-block position-relative top-50 start-0 translate-middle-y col-6 col-sm-6 col-md-6 col-lg-4">
+                <i class="fas fa-search search_icon"></i>
+                <input type="text" class="search_bar col-12" placeholder="Search..." spellcheck="true" autocomplete="on">
+            </div>
+            
+            {% if isLoggedIn %}
+            
+            <div class=" position-relative top-50 start-0 translate-middle-y col-6 col-sm-6 col-md-6 col-lg-4 row">
+                
+                <span>
+                    <p style="width: auto;" class="username">{{user.username}}</p>
+                </span>
+
+                <span>
+                    <a href="/logout" class="user_btn"><p class="user_btn">logout</p></a>
+
+                    <a href="/{{ user.id }}/edit" class="user_btn"><p class="user_btn">view profile</p></a>
+            </div>
+                </span>
+
+            {% else %}
+
+            <div class="register_sign_in_btn position-relative top-50 start-0 translate-middle-y col-6 col-sm-6 col-md-6 col-lg-4 row">
+                <div class="sign_in_btn register_sign_in_btn_props col-6 position-relative top-50 start-50 translate-middle-x">
+                    <a href="/login">Sign In</a>
+                </div>
+
+                <div class="register_btn register_sign_in_btn_props position-relative col-6 position-relative top-50 start-50 translate-middle-x">
+                    <a href="/register">Register</a>
+                </div>
+            </div>
+
+            {% endif %}
+        </header>
+
+    <div id="home_body" class="row col-12">
+
+    {#   <div id="new_question_background">
+            <form id="new_question_dialogue">
+
+                <div class="form_widget question_post">
+                    <i class="fas fa-times close_icon"></i>
+                    {{form_start(form, {'attr': {'no-validate': 'no-validate'}})}}
+                        {{form_widget(form.question_title, {'attr': {'class' : 'form-control ask_question_title', 'placeholder': 'Enter Title'}})}}
+                        {{form_widget(form.question, {'attr': {'class' : 'form-control ask_question_dialouge', 'placeholder': 'Enter Question Here..'}})}}
+                        {{form_widget(form.post, {'attr': {'class' : 'form-control post_btn'}})}}
+                    {{form_end(form)}}
+                </div>
+
+            </form>
+        </div> #}
+
+        {# only for mobile and ipad #}
+
+        <div class="search_container col-12 d-block d-sm-block d-md-block d-lg-none">
+            <i class="fas fa-search search_icon"></i>
+            <input type="text" class="search_bar col-10" placeholder="Search..." spellcheck="true" autocomplete="on">
+            <select class="subject_select">
+                <option value="All">All</option>
+                <option value="Physics">Physics</option>
+                <option value="Chemistry">Chemistry</option>
+                <option value="Biology">Biology</option>
+            </select>
+        </div>
+
+        {# for desktop and ipad #}
+    
+        <div class="desktop_nav_container d-none d-sm-none d-md-none d-lg-block col-lg-4">
+            <div class="desktop_navbar row">
+                <div class="col-3"></div></a>
+                <div class="nav_container col-9">
+                    <h1 class="nav_menu_header">Menu</h1>
+
+                    <a href="/">
+                        <div class="nav_btn  col-9">
+                            <i class="fas fa-home nav_icon"></i>
+                            Home
+                        </div>
+                    </a>
+
+                    <a href="/explore">
+                        <div class="nav_btn  col-9">
+                            <i class="fas fa-compass nav_icon"></i>
+                            Explore
+                        </div>
+                    </a>
+
+                        <div class="nav_btn nav_btn_active col-9">
+                            <i class="fas fa-comment-alt nav_icon"></i>
+                            My Answers
+                        </div>
+
+                    {% if (isAdmin == "ROLE_ADMIN") %}        
+                        <a href="/user-index">
+                            <div class="nav_btn  col-9">
+                                <i class="fas fa-lock nav_icon"></i>
+                                Admin
+                            </div>
+                        </a>
+                    {% endif %}
+
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="desktop_question_container d-none d-sm-none d-md-none d-lg-block col-lg-4">
+    {% for answer in answers %}
+
+                <div class="question_box answer_height position-relative top-0 start-50 translate-middle-x col-12 row">
+                    <div class="gap col-1 answer_height answer_gap">
+                        <div class="voter position-relative top-50 start-0 translate-middle-y"  data-id="{{ answer.id }}">
+                        {% if (answer.question.topic == 0) %}
+                            <i class="fas fa-sort-up upvote position-relative top-0 start-50 translate-middle-y" style="color: #61C2F2" data-topic="{{ answer.question.topic }}"></i>
+
+                        {% elseif (answer.question.topic == 1) %}
+                            <i class="fas fa-sort-up upvote position-relative top-0 start-50 translate-middle-y" style="color: #FFD966" data-topic="{{ answer.question.topic }}"></i>
+
+                        {% elseif (answer.question.topic == 2) %}
+                            <i class="fas fa-sort-up upvote position-relative top-0 start-50 translate-middle-y" style="color: #61F291"data-topic="{{ answer.question.topic }}"></i>
+
+                        {% endif %}
+
+                        <div class="vote_number position-relative top-0 start-50 translate-middle-y">
+                            {{ answer.votes}}
+                        </div>
+                        <i class="fas fa-sort-down downvote position-relative bottom-0 start-50 translate-middle-y"></i>
+                    </div>
+                    </div>
+
+                    <div class="col-10">
+                        <div class="question answer_height">
+                            {{answer.answer}}
+                        </div>
+                        <div class="break_line"></div>
+                        <div class="user user_answer">
+                            <i class="far fa-user-circle user_profile"></i>
+                            {{ answer.user.username }}
+                        </div>
+                    </div>
+                    <div class="gap col-1 answer_height"></div>            
+                </div>
+
+        {% endfor %}
+        </div>
+        {# desktop question container #}
+
+
+        <div class="desktop_rank_container d-none d-sm-none d-md-none d-lg-block col-lg-4">
+            
+            <div class="author_rank_container position-relative top-0 start-50 translate-middle-x">
+            
+                <h1 class="author_rank_title">Top Post:</h1>
+
+                <div class="author_rank">
+                    {% for question in questions %}
+
+                    <div class="rank"> 
+                        <i class="far fa-user-circle user_rank_image"></i>
+                        <div class="user_rank_name">{{question.user.username}}</div>
+                        <div class="user_rank_number">{{question.votes}}</div>
+                        <i class="fas fa-sort-up user_rank_level"></i>
+                    </div>
+
+            {% endfor %}
+                </div>
+            </div>
+
+            <div class="ask_question_btn position-relative top-0 start-50 translate-middle-x">
+                <i class="fas fa-comment-alt ask_question"></i>
+                    <a href="/questions/ask-question">
+                        Ask Question
+                    </a>
+            </div>
+        </div>
+        
+
+    </div>
+
+    </div>
+
+{% endblock %}

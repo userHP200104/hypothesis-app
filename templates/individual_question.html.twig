@@ -1,0 +1,154 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Home {% endblock %} 
+
+{% block stylesheet %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('../css/main.css') }}"/>
+{% endblock %} 
+
+
+{% block body %}
+
+    <div class="container-fluid">
+
+    <header class="header position-fixed top-0 start-0 col-12 row"> 
+            <img src="{{ asset('../assets/hypothesis_logo.svg')}}" class="logo position-relative top-50 start-0 translate-middle-y col-6 col-sm-6 col-md-6 col-lg-4">
+            
+    </header>
+
+    <div id="home_body" class="row col-12">
+
+    {#   <div id="new_question_background">
+            <form id="new_question_dialogue">
+
+                <div class="form_widget question_post">
+                    <i class="fas fa-times close_icon"></i>
+                    {{form_start(form, {'attr': {'no-validate': 'no-validate'}})}}
+                        {{form_widget(form.question_title, {'attr': {'class' : 'form-control ask_question_title', 'placeholder': 'Enter Title'}})}}
+                        {{form_widget(form.question, {'attr': {'class' : 'form-control ask_question_dialouge', 'placeholder': 'Enter Question Here..'}})}}
+                        {{form_widget(form.post, {'attr': {'class' : 'form-control post_btn'}})}}
+                    {{form_end(form)}}
+                </div>
+
+            </form>
+        </div> #}
+
+        {# for desktop and ipad #}
+    
+        <div class="desktop_nav_container d-none d-sm-none d-md-none d-lg-block col-lg-4">
+            <div class="desktop_navbar row">
+                <div class="col-3"></div>
+                <div class="nav_container col-9">
+                    <h1 class="nav_menu_header">Menu</h1>
+
+                        <a href="/">
+                            <div class="nav_btn col-9">
+                                <i class="fas fa-home nav_icon"></i>
+                                Home
+                            </div>
+                        </a>
+
+                    <a href="/explore">
+                        <div class="nav_btn  col-9">
+                            <i class="fas fa-compass nav_icon"></i>
+                            Explore
+                        </div>
+                    </a>
+
+                    <a href="/my-answers">
+                        <div class="nav_btn  col-9">
+                            <i class="fas fa-comment-alt nav_icon"></i>
+                            My Answers
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="desktop_question_container d-none d-sm-none d-md-none d-lg-block col-lg-4">
+            <div class="question_box position-relative top-0 start-50 translate-middle-x col-12 row">
+                <div class="gap col-1">
+
+                </div>
+
+                <div class="col-10">
+                        <h1 class="question_title">{{ questions.questionTitle }}</h1>
+                    <div class="question">
+                        {{questions.question}}
+                    </div>
+                    <div class="break_line"></div>
+                    <div class="user">
+                        <i class="far fa-user-circle user_profile"></i>
+                        {{ questions.user.username }}
+                    </div>
+                    <div class="answers">
+                        <a href="/answers/{{ questions.id }}">
+                            <p class="view_answer">Add Answers</p>
+                            <i class="far fa-comment-alt answer_icon"></i>
+                            <p class="answer_number">{{answers|length}}</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="gap col-1"></div>            
+            </div>
+
+        {% for answer in answers %}
+
+                <div class="question_box answer_height position-relative top-0 start-50 translate-middle-x col-12 row">
+                    <div class="gap col-1 answer_height answer_gap">
+                        <div class="voter position-relative top-50 start-0 translate-middle-y"  data-id="{{ answer.id }}">
+                        {% if (answer.question.topic == 0) %}
+                            <i class="fas fa-sort-up upvote position-relative top-0 start-50 translate-middle-y" style="color: #61C2F2" data-topic="{{ answer.question.topic }}"></i>
+
+                        {% elseif (answer.question.topic == 1) %}
+                            <i class="fas fa-sort-up upvote position-relative top-0 start-50 translate-middle-y" style="color: #FFD966" data-topic="{{ answer.question.topic }}"></i>
+
+                        {% elseif (answer.question.topic == 2) %}
+                            <i class="fas fa-sort-up upvote position-relative top-0 start-50 translate-middle-y" style="color: #61F291"data-topic="{{ answer.question.topic }}"></i>
+
+                        {% endif %}
+
+                        <div class="vote_number position-relative top-0 start-50 translate-middle-y">
+                            {{ answer.votes}}
+                        </div>
+                        <i class="fas fa-sort-down downvote position-relative bottom-0 start-50 translate-middle-y"></i>
+                    </div>
+                    </div>
+
+                    <div class="col-10">
+                        <div class="question answer_height">
+                            {{answer.answer}}
+                        </div>
+                        <div class="break_line"></div>
+                        <div class="user user_answer">
+                            <i class="far fa-user-circle user_profile"></i>
+                            {{ answer.user.username }}
+                        </div>
+                    </div>
+                    <div class="gap col-1 answer_height"></div>            
+                </div>
+
+        {% endfor %}
+        </div>
+        {# desktop question container #}
+
+
+        <div class="desktop_rank_container d-none d-sm-none d-md-none d-lg-block col-lg-4">
+
+            <div class="ask_question_btn position-relative top-0 start-50 translate-middle-x">
+                <i class="fas fa-comment-alt ask_question"></i>
+                    <a href="/answers/{{ questions.id }}">
+                        Answer Question
+                    </a>
+            </div>
+        </div>
+        
+
+    </div>
+
+    </div>
+
+{% endblock %}
+
